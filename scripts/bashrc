@@ -1,5 +1,6 @@
 set_aliases() {
 	alias ll='ls -l'
+	alias lla='ls -la'
 }
 
 set_prompt() {
