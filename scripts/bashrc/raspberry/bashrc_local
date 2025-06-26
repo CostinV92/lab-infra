@@ -1,0 +1,19 @@
+#!/bin/bash
+
+start_ssh_agent() {
+	USER=$(whoami)
+	SSH_AGENT_PID=$(ps -u $USER -o pid,cmd | awk '/[s]sh-agent/{print$1;exit}')
+	if [ -n "$SSH_AGENT_PID"  ]; then
+		SSH_AUTH_SOCK="/tmp/"$(ls -l /tmp/ | awk '/ '"$USER"' /{print$NF}')
+		SSH_AUTH_SOCK=$SSH_AUTH_SOCK/$(ls $SSH_AUTH_SOCK)
+		echo "ssh-agent already running"
+		echo SSH_AGENT_PID=$SSH_AGENT_PID
+		echo SSH_AUTH_SOCK=$SSH_AUTH_SOCK
+		export SSH_AGENT_PID SSH_AUTH_SOCK
+	else
+		eval $(ssh-agent)
+		ssh-add
+	fi
+}
+
+start_ssh_agent
