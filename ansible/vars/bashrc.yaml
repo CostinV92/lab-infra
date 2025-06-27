@@ -1,0 +1,7 @@
+---
+bashrc_dir: "{{ scripts_dir }}/bashrc"
+bashrc_global_file: "bashrc_global"
+bashrc_global_path: "{{ bashrc_dir }}/{{ bashrc_global_file }}"
+bashrc_local_file: "bashrc_local"
+bashrc_local_path: "{{ bashrc_dir }}/{{ target_host }}/{{ bashrc_local_file }}"
+bashrc_remote_dir: "{{ remote_data_dir }}/bashrc"
