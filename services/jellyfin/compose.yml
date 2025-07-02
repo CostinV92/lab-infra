@@ -1,0 +1,27 @@
+services:
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
+    devices:
+      - /dev/dri/:/dev/dri/
+    volumes:
+      - ${JELLYFIN_DATA}/config:/config
+      - ${SERIES_DIR}:/data/series
+      - ${FILMS_DIR}:/data/films
+    ports:
+      - ${JELLYFIN_PORT}:${JELLYFIN_PORT}
+    restart: unless-stopped
+    networks:
+      - jellyfin_network
+
+networks:
+  jellyfin_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${JELLYFIN_NETWORK}

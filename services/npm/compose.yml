@@ -1,0 +1,25 @@
+services:
+
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: npm
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+    volumes:
+      - ${NPM_DATA}/data:/data
+      - ${NPM_DATA}/letsencrypt:/etc/letsencrypt
+    ports:
+      - '${NPM_HOST_HTTP_PORT}:80'
+      - '${NPM_HOST_HTTPS_PORT}:443'
+      - '${NPM_HOST_ADMIN_PORT}:81' # admin page
+    restart: unless-stopped
+    networks:
+      - npm_network
+
+networks:
+  npm_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${NPM_NETWORK}

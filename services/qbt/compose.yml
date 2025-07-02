@@ -1,0 +1,30 @@
+services:
+
+  qbt:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbt
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
+      - WEBUI_PORT=${QBT_WEB_PORT}
+      - TORRENTING_PORT=${QBT_TORRENT_PORT}
+    volumes:
+      - ${QBT_DATA}/config:/config
+      - ${QBT_DATA}/downloads:/downloads/
+      - ${QBT_DATA}/qbt_ui/:/qbt_ui # webui skins
+      - ${MEDIA_DIR}:/jellyfin # jellyfin library for direct downloading
+    ports:
+      - ${QBT_WEB_PORT}:${QBT_WEB_PORT}
+      - ${QBT_TORRENT_PORT}:${QBT_TORRENT_PORT}
+      - ${QBT_TORRENT_PORT}:${QBT_TORRENT_PORT}/udp
+    networks:
+      - qbt_network
+    restart: unless-stopped
+
+networks:
+  qbt_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${QBT_NETWORK}

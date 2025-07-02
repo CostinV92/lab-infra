@@ -1,0 +1,18 @@
+services:
+  trilium:
+    image: triliumnext/notes:latest
+    container_name: trilium
+    ports:
+      - "8090:8080"
+    volumes:
+      - ${TRILIUM_DATA}:/home/node/trilium-data
+    restart: unless-stopped
+    networks:
+      - trilium_network
+
+networks:
+  trilium_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${TRILIUM_NETWORK}
