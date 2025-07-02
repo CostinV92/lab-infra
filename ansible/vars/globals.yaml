@@ -1,5 +1,9 @@
 ---
 ansible_dir: "{{ playbook_dir }}/.."
+
 root_dir: "{{ ansible_dir }}/.."
+services_dir: "{{ root_dir }}/services"
 scripts_dir: "{{ root_dir }}/scripts"
-remote_data_dir: "~/lab_data"
+
+admin_user: 'victor-admin'
+remote_data_dir: "/home/{{ admin_user }}/lab-data"

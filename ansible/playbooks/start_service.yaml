@@ -1,0 +1,50 @@
+---
+- name: Start service
+  hosts: "{{ target_host }}"
+  vars_files:
+    - ../vars/globals.yaml
+    - ../vars/services.yaml
+  tasks:
+    - name: Generate service .env file
+      ansible.builtin.shell:
+        cmd: 'cat {{ global_env_file }} > {{ env_file }}'
+        executable: /bin/bash
+      delegate_to: 127.0.0.1
+      when: global_env_file is exists
+
+    - name: Concat local env file to .env
+      ansible.builtin.shell:
+        cmd: 'cat {{ local_env_file }} >> {{ env_file }}'
+        executable: /bin/bash
+      delegate_to: 127.0.0.1
+      when: local_env_file is exists
+
+    - name: Create remote service directory
+      ansible.builtin.file:
+        path: '{{ remote_dir }}'
+        state: directory
+
+    - name: Stop service if it is running
+      community.docker.docker_compose_v2:
+        project_src: '{{ remote_dir }}'
+        state: absent
+      become: true
+      ignore_errors: true
+
+    - name: Copy .env file to remote service directory
+      ansible.builtin.copy:
+        src: '{{ env_file }}'
+        dest: '{{ remote_dir }}/{{ env_file_name }}'
+      when: env_file is exists
+
+    - name: Copy compose file to remote service directory
+      ansible.builtin.copy:
+        src: '{{ compose_file }}'
+        dest: '{{ remote_dir }}/{{ compose_file_name }}'
+      when: compose_file is exists
+
+    - name: Start service
+      community.docker.docker_compose_v2:
+        project_src: '{{ remote_dir }}'
+        state: present
+      become: true

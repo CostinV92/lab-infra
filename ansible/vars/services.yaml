@@ -1,0 +1,14 @@
+---
+remote_dir: "{{ remote_data_dir }}/services/{{ service }}"
+env_dir: "{{ services_dir }}/env"
+service_env_dir: "{{ env_dir }}/{{ service }}"
+
+env_file_name: ".env"
+global_env_file_name: "env.global"
+local_env_file_name: "env.local"
+compose_file_name: "compose.yml"
+
+env_file: "{{ service_env_dir }}/{{ env_file_name }}"
+global_env_file: "{{ env_dir }}/{{ global_env_file_name }}"
+local_env_file: "{{ service_env_dir }}/{{ local_env_file_name }}"
+compose_file: "{{ services_dir }}/{{ service }}/{{ compose_file_name }}"
