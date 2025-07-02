@@ -17,9 +17,9 @@ start_ssh_agent() {
 }
 
 set_aliases() {
-	alias play="ansible-playbook"
-	alias ans="cd ~/projects/auto-infra/ansible"
-	alias lab-update-all="ans && play -i inventories/inventory.yaml playbooks/update_all.yaml"
+	alias play="ansible-playbook -i inventories/inventory.yaml"
+	alias ans="cd ~/projects/lab-infra/ansible"
+	alias lab-update-all="ans && play playbooks/update_all.yaml"
 }
 
 start_ssh_agent
