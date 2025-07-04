@@ -1,0 +1,23 @@
+---
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      SIGNUPS_ALLOWED: "false"
+      ADMIN_TOKEN: ${VAULT_ADMIN_TOKEN}
+      DOMAIN: ${VAULT_DOMAIN}
+    volumes:
+      - ${VAULT_DATA}:/data/
+    ports:
+      - ${VAULT_PORT}:80
+    networks:
+      - vaultwarden_network
+
+networks:
+  vaultwarden_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${VAULT_NETWORK}
