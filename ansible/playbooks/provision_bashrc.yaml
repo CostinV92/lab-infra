@@ -35,7 +35,7 @@
       ansible.builtin.shell:
         cmd: 'echo ". {{ bashrc_remote_dir }}/{{ bashrc_local_file }}" >> {{ bashrc_remote_dir }}/bashrc'
         executable: /bin/bash
-      when: bashrc_local_path is exists and bashrc_global_copy.changed or bashrc_local_copy.changed
+      when: bashrc_local_path is exists and (bashrc_global_copy.changed or bashrc_local_copy.changed)
 
     - name: Source bashrc in main bashrc
       ansible.builtin.lineinfile:
