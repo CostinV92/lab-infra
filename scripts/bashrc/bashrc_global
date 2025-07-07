@@ -3,6 +3,7 @@
 set_aliases() {
 	alias ll='ls -l'
 	alias lla='ls -la'
+	alias dpn='sudo docker ps --format "{{.Names}}"'
 }
 
 set_prompt() {
