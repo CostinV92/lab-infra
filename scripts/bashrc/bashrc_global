@@ -14,9 +14,9 @@ set_prompt() {
 
 		local DEFAULT='\[\e[00m\]'
 
-		local REDB='\[\e[1;31m\]'
-		local GREENB='\[\e[1;32m\]'
-		local YELLOWB='\[\e[1;33m\]'
+		local REDB='\[\e[0;31m\]'
+		local GREENB='\[\e[0;32m\]'
+		local YELLOWB='\[\e[0;33m\]'
 
 		# magenta
 		local USER_COLOR='\[\e[0;35m\]'
