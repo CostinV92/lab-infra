@@ -15,30 +15,34 @@
         src: '{{ bashrc_global_path }}'
         dest: '{{ bashrc_remote_dir }}'
         backup: true
-      register: bashrc_global_copy
+      when: bashrc_global_path is exists
 
     - name: Copy local bashrc
       ansible.builtin.copy:
         src: '{{ bashrc_local_path }}'
         dest: '{{ bashrc_remote_dir }}'
         backup: true
-      register: bashrc_local_copy
       when: bashrc_local_path is exists
 
     - name: Source global bashrc
-      ansible.builtin.shell:
-        cmd: 'echo ". {{ bashrc_remote_dir }}/{{ bashrc_global_file }}" > {{ bashrc_remote_dir }}/bashrc'
-        executable: /bin/bash
-      when: bashrc_global_copy.changed or bashrc_local_copy.changed
+      ansible.builtin.lineinfile:
+        path: '{{ bashrc_remote_path }}'
+        line: '. {{ bashrc_remote_dir }}/{{ bashrc_global_file }}'
+        state: present
+        create: true
+      when: bashrc_global_path is exists
 
     - name: Source local bashrc
-      ansible.builtin.shell:
-        cmd: 'echo ". {{ bashrc_remote_dir }}/{{ bashrc_local_file }}" >> {{ bashrc_remote_dir }}/bashrc'
-        executable: /bin/bash
-      when: bashrc_local_path is exists and (bashrc_global_copy.changed or bashrc_local_copy.changed)
+      ansible.builtin.lineinfile:
+        path: '{{ bashrc_remote_path }}'
+        line: '. {{ bashrc_remote_dir }}/{{ bashrc_local_file }}'
+        state: present
+        create: true
+      when: bashrc_local_path is exists
 
     - name: Source bashrc in main bashrc
       ansible.builtin.lineinfile:
         path: '~/.bashrc'
-        line: '. {{ bashrc_remote_dir }}/bashrc'
+        line: '. {{ bashrc_remote_path }}'
         state: present
+      when: bashrc_remote_path is exists
