@@ -1,0 +1,19 @@
+---
+- name: Update service
+  hosts: "{{ target_host }}"
+  vars_files:
+    - ../vars/globals.yaml
+    - ../vars/services.yaml
+  tasks:
+    - name: Check if service exists
+      ansible.builtin.stat:
+        path: '{{ remote_dir }}'
+      register: service_exists
+
+    - name: Update service
+      community.docker.docker_compose_v2:
+        project_src: '{{ remote_dir }}'
+        state: present
+        pull: always
+      become: true
+      when: service_exists.stat.exists
