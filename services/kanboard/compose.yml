@@ -1,0 +1,22 @@
+name: kan
+services:
+  app:
+    image: ${KAN_IMAGE:-kanboard/kanboard:latest}
+    container_name: kan
+    restart: unless-stopped
+    ports:
+     - "${KAN_HTTP_HOST_PORT}:80"
+     - "${KAN_HTTPS_HOST_PORT}:443"
+    volumes:
+     - ${KAN_DATA_DIR}/data:/var/www/app/data
+     - ${KAN_DATA_DIR}/plugins:/var/www/app/plugins
+     - ${KAN_DATA_DIR}/certs:/etc/nginx/ssl
+    networks:
+      - kan_network
+
+networks:
+  kan_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${KAN_NETWORK}
