@@ -4,6 +4,10 @@ services:
     image: ${KAN_IMAGE:-kanboard/kanboard:latest}
     container_name: kan
     restart: unless-stopped
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
     ports:
      - "${KAN_HTTP_HOST_PORT}:80"
      - "${KAN_HTTPS_HOST_PORT}:443"
