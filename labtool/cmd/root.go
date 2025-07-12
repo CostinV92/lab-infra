@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"labtool/cmd/configure"
+	"labtool/cmd/service"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -34,9 +35,10 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(configure.ConfigureCmd)
+	rootCmd.AddCommand(service.ServiceCmd)
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write to (default is $HOME/.labtool.env)")
+	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write")
 }
