@@ -12,11 +12,12 @@ import (
 )
 
 type config struct {
-	AdminUser     string
-	PlaybookDir   string
-	InventoryPath string
-	ServicesDir   string
-	ScriptsDir    string
+	AdminUser         string
+	PlaybookDir       string
+	InventoryPath     string
+	AnsibleConfigFile string
+	ServicesDir       string
+	ScriptsDir        string
 }
 
 const ErrorConfDirNoExistsFmt = "directory '%s' doesn't exist"
@@ -68,6 +69,7 @@ func CheckConfig() {
 	Cfg.AdminUser = viper.GetString("admin_user")
 	Cfg.InventoryPath = viper.GetString("ansible_inventory_path")
 	Cfg.PlaybookDir = viper.GetString("ansible_playbook_dir")
+	Cfg.AnsibleConfigFile = viper.GetString("ansible_config_file")
 	Cfg.ScriptsDir = viper.GetString("scripts_dir")
 	Cfg.ServicesDir = viper.GetString("services_dir")
 }
@@ -138,6 +140,12 @@ func readInventoryPath() {
 	cobra.CheckErr(validatePath("inventory path", Cfg.InventoryPath, false))
 }
 
+func readAnsibleConfigFile() {
+	readStringToVar("Ansible config file (relative to $HOME)", &Cfg.AnsibleConfigFile)
+	appendHomeDir(&Cfg.AnsibleConfigFile)
+	cobra.CheckErr(validatePath("ansible config path", Cfg.AnsibleConfigFile, false))
+}
+
 func readServiceDir() {
 	readStringToVar("Services directory (relative to $HOME)", &Cfg.ServicesDir)
 	appendHomeDir(&Cfg.ServicesDir)
@@ -154,6 +162,7 @@ func readConfigFromInput() {
 	readAdminUser()
 	readPlaybookDir()
 	readInventoryPath()
+	readAnsibleConfigFile()
 	readServiceDir()
 	readScriptsDir()
 }
@@ -161,6 +170,7 @@ func readConfigFromInput() {
 func saveConfigToFile() {
 	viper.Set("admin_user", Cfg.AdminUser)
 	viper.Set("ansible_inventory_path", Cfg.InventoryPath)
+	viper.Set("ansible_config_file", Cfg.AnsibleConfigFile)
 	viper.Set("ansible_playbook_dir", Cfg.PlaybookDir)
 	viper.Set("scripts_dir", Cfg.ScriptsDir)
 	viper.Set("services_dir", Cfg.ServicesDir)
