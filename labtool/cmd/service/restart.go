@@ -21,15 +21,15 @@ var restartCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		shellCmd := exec.Command("ansible-playbook")
+
 		shellCmd.Args = append(shellCmd.Args, "-i", configure.Cfg.InventoryPath)
 		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("target_host=%s", Host))
 		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("service=%s", Service))
 		shellCmd.Args = append(shellCmd.Args, configure.Cfg.PlaybookDir+"/restart_service.yaml")
 
-		fmt.Println(shellCmd)
-
 		shellCmd.Stdout = os.Stdout
 		shellCmd.Stderr = os.Stderr
+
 		shellCmd.Run()
 	},
 }
