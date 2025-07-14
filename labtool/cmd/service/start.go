@@ -5,6 +5,9 @@ package service
 
 import (
 	"fmt"
+	"labtool/cmd/configure"
+	"os"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
@@ -16,8 +19,17 @@ var startCmd = &cobra.Command{
 	Long:  "start a service",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("start called")
-		fmt.Println(Service)
+		shellCmd := exec.Command("ansible-playbook")
+
+		shellCmd.Args = append(shellCmd.Args, "-i", configure.Cfg.InventoryPath)
+		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("target_host=%s", Host))
+		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("service=%s", Service))
+		shellCmd.Args = append(shellCmd.Args, configure.Cfg.PlaybookDir+"/start_service.yaml")
+
+		shellCmd.Stdout = os.Stdout
+		shellCmd.Stderr = os.Stderr
+
+		shellCmd.Run()
 	},
 }
 
