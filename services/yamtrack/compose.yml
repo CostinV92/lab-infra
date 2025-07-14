@@ -1,0 +1,33 @@
+---
+services:
+  yamtrack:
+    container_name: yamtrack
+    image: ghcr.io/fuzzygrim/yamtrack
+    restart: unless-stopped
+    depends_on:
+      - redis
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
+      - SECRET=${YAMTRACK_SECRET}
+      - REDIS_URL=redis://redis:6379
+      - SOCIAL_PROVIDERS=${YAMTRACK_SOCIAL_PROVIDERS}
+      - SOCIALACCOUNT_PROVIDERS=${YAMTRACK_SOCIALACCOUNT_PROVIDERS}
+      - REGISTRATION=False
+      - SOCIALACCOUNT_ONLY=True
+      - REDIRECT_LOGIN_TO_SSO=True
+    volumes:
+      - ${YAMTRACK_DATA}/db:/yamtrack/db
+    ports:
+      - "${YAMTRACK_PORT}:8000"
+
+  redis:
+    container_name: yamtrack-redis
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
