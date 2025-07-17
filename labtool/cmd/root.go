@@ -4,8 +4,10 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"labtool/cmd/bashrc"
 	"labtool/cmd/configure"
 	"labtool/cmd/service"
+	"labtool/cmd/utilcmd"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -21,6 +23,9 @@ and run your ansible environment in a user friendly way.`,
 		// Uncomment the following line if your bare application
 		// has an action associated with it:
 		// Run: func(cmd *cobra.Command, args []string) { fmt.Printf("Command run\n") },
+		PersistentPostRun: func(cmd *cobra.Command, args []string) {
+			utilcmd.RunCmd()
+		},
 	}
 )
 
@@ -36,9 +41,12 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(configure.ConfigureCmd)
 	rootCmd.AddCommand(service.ServiceCmd)
+	rootCmd.AddCommand(bashrc.BashrcCmd)
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
+	rootCmd.PersistentFlags().StringVarP(&configure.Host, "target-host", "t", "", "host to provision bashrc on")
+	rootCmd.MarkPersistentFlagRequired("target-host")
 	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write")
 }

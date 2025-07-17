@@ -29,6 +29,7 @@ const ErrorConfPathNoFileFmt = "%s must be file"
 var (
 	CfgFile string
 	Cfg     config
+	Host    string
 	homeDir string
 
 	// configureCmd represents the configure command
