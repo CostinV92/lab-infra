@@ -24,6 +24,10 @@ var startCmd = &cobra.Command{
 		shellCmd.Args = append(shellCmd.Args, "-i", configure.Cfg.InventoryPath)
 		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("target_host=%s", Host))
 		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("service=%s", Service))
+		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("admin_user=%s", configure.Cfg.AdminUser))
+		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("scripts_dir=%s", configure.Cfg.ScriptsDir))
+		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("services_dir=%s", configure.Cfg.ServicesDir))
+		shellCmd.Args = append(shellCmd.Args, "-e", fmt.Sprintf("env_dir=%s", configure.Cfg.ServicesEnvDir))
 		shellCmd.Args = append(shellCmd.Args, configure.Cfg.PlaybookDir+"/start_service.yaml")
 
 		shellCmd.Stdout = os.Stdout
