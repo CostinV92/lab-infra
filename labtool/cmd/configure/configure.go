@@ -61,7 +61,7 @@ func setConfigFile() {
 	fmt.Println("Using config file:", viper.ConfigFileUsed())
 }
 
-func CheckConfig() {
+func ReadConfigFile() {
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: config file not found. Run 'labtool configure' to create it\n")
 		os.Exit(1)

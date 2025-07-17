@@ -22,7 +22,8 @@ var ServiceCmd = &cobra.Command{
 	Long:  `Control your services`,
 	// Run: func(cmd *cobra.Command, args []string) { },
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		configure.CheckConfig()
+		configure.ReadConfigFile()
+
 		os.Setenv("ANSIBLE_CONFIG", configure.Cfg.AnsibleConfigFile)
 	},
 }
