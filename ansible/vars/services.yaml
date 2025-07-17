@@ -1,6 +1,5 @@
 ---
 remote_dir: "{{ remote_data_dir }}/services/{{ service }}"
-env_dir: "{{ services_dir }}/env"
 service_env_dir: "{{ env_dir }}/{{ service }}"
 
 env_file_name: ".env"

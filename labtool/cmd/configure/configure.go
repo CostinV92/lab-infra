@@ -17,6 +17,7 @@ type config struct {
 	InventoryPath     string
 	AnsibleConfigFile string
 	ServicesDir       string
+	ServicesEnvDir    string
 	ScriptsDir        string
 }
 
@@ -72,6 +73,7 @@ func CheckConfig() {
 	Cfg.AnsibleConfigFile = viper.GetString("ansible_config_file")
 	Cfg.ScriptsDir = viper.GetString("scripts_dir")
 	Cfg.ServicesDir = viper.GetString("services_dir")
+	Cfg.ServicesEnvDir = viper.GetString("services_env_dir")
 }
 
 func getHomeDir() {
@@ -152,6 +154,12 @@ func readServiceDir() {
 	cobra.CheckErr(validatePath("services directory", Cfg.ServicesDir, true))
 }
 
+func readServiceEnvDir() {
+	readStringToVar("Services environement directory (relative to $HOME)", &Cfg.ServicesEnvDir)
+	appendHomeDir(&Cfg.ServicesEnvDir)
+	cobra.CheckErr(validatePath("services env directory", Cfg.ServicesDir, true))
+}
+
 func readScriptsDir() {
 	readStringToVar("Scripts directory (relative to $HOME)", &Cfg.ScriptsDir)
 	appendHomeDir(&Cfg.ScriptsDir)
@@ -164,6 +172,7 @@ func readConfigFromInput() {
 	readInventoryPath()
 	readAnsibleConfigFile()
 	readServiceDir()
+	readServiceEnvDir()
 	readScriptsDir()
 }
 
@@ -174,6 +183,7 @@ func saveConfigToFile() {
 	viper.Set("ansible_playbook_dir", Cfg.PlaybookDir)
 	viper.Set("scripts_dir", Cfg.ScriptsDir)
 	viper.Set("services_dir", Cfg.ServicesDir)
+	viper.Set("setvices_env_dir", Cfg.ServicesEnvDir)
 
 	err := viper.WriteConfigAs(CfgFile)
 	if err != nil {
