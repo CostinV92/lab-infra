@@ -5,6 +5,7 @@ package service
 
 import (
 	"labtool/cmd/configure"
+	"labtool/cmd/utilcmd"
 
 	"github.com/spf13/cobra"
 )
@@ -16,10 +17,7 @@ var restartCmd = &cobra.Command{
 	Long:  "restart a service",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		shellCmd.Args = append(shellCmd.Args, extraVars...)
-		shellCmd.Args = append(shellCmd.Args, configure.Cfg.PlaybookDir+"/restart_service.yaml")
-
-		shellCmd.Run()
+		utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/restart_service.yaml")
 	},
 }
 
