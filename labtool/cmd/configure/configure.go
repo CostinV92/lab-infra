@@ -187,7 +187,7 @@ func saveConfigToFile() {
 	viper.Set("ansible_playbook_dir", Cfg.PlaybookDir)
 	viper.Set("scripts_dir", Cfg.ScriptsDir)
 	viper.Set("services_dir", Cfg.ServicesDir)
-	viper.Set("setvices_env_dir", Cfg.ServicesEnvDir)
+	viper.Set("services_env_dir", Cfg.ServicesEnvDir)
 
 	err := viper.WriteConfigAs(CfgFile)
 	if err != nil {
