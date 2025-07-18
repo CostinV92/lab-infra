@@ -1,5 +1,5 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+Copyright © 2025 Victor-Gabriel Costin <costinv92@gmail.com>
 */
 package service
 
@@ -31,10 +31,15 @@ var (
 )
 
 func init() {
-	ServiceCmd.AddCommand(startCmd)
-	ServiceCmd.AddCommand(restartCmd)
+	ServiceCmd.AddGroup(&configure.CommandsGroup)
 
-	ServiceCmd.PersistentFlags().StringVarP(&configure.Host, "target-host", "t", "", "host to provision bashrc on")
+	ServiceCmd.AddCommand(startCmd)
+	startCmd.GroupID = configure.CommandsGroup.ID
+
+	ServiceCmd.AddCommand(restartCmd)
+	restartCmd.GroupID = configure.CommandsGroup.ID
+
+	ServiceCmd.PersistentFlags().StringVarP(&configure.Host, "target-host", "t", "", "host to run the command on")
 	ServiceCmd.MarkPersistentFlagRequired("target-host")
 	ServiceCmd.PersistentFlags().StringVarP(&service, "service", "s", "", "service to run command for")
 	ServiceCmd.MarkPersistentFlagRequired("service")

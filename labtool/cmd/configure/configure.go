@@ -1,5 +1,5 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+Copyright © 2025 Victor-Gabriel Costin <costinv92@gmail.com>
 */
 package configure
 
@@ -31,6 +31,9 @@ var (
 	Cfg     config
 	Host    string
 	homeDir string
+
+	CommandsGroup = cobra.Group{ID: "Commands", Title: "Commands"}
+	HelpGroup     = cobra.Group{ID: "Help", Title: "Help"}
 
 	// configureCmd represents the configure command
 	ConfigureCmd = &cobra.Command{

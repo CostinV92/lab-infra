@@ -1,3 +1,6 @@
+/*
+Copyright © 2025 Victor-Gabriel Costin <costinv92@gmail.com>
+*/
 package utilcmd
 
 import (
