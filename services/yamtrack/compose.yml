@@ -21,6 +21,8 @@ services:
       - ${YAMTRACK_DATA}/db:/yamtrack/db
     ports:
       - "${YAMTRACK_PORT}:8000"
+    networks:
+      - yamtrack_network
 
   redis:
     container_name: yamtrack-redis
@@ -28,6 +30,15 @@ services:
     restart: unless-stopped
     volumes:
       - redis_data:/data
+    networks:
+      - yamtrack_network
 
 volumes:
   redis_data:
+
+networks:
+  yamtrack_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${YAMTRACK_NETWORK}
