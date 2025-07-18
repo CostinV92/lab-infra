@@ -1,7 +1,7 @@
-- name: Update all hosts
-  hosts: all
+- name: Upgrade host
+  hosts: "{{ target_host }}"
   tasks:
-   - name: Update all servers
+   - name: Update server
      ansible.builtin.apt:
        name: "*"
        state: latest

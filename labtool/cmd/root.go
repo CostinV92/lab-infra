@@ -7,6 +7,7 @@ import (
 	"labtool/cmd/bashrc"
 	"labtool/cmd/configure"
 	"labtool/cmd/service"
+	"labtool/cmd/upgrade"
 	"labtool/cmd/utilcmd"
 	"os"
 
@@ -53,6 +54,9 @@ func init() {
 
 	rootCmd.AddCommand(bashrc.BashrcCmd)
 	bashrc.BashrcCmd.GroupID = configure.CommandsGroup.ID
+
+	rootCmd.AddCommand(upgrade.UpgradeCmd)
+	upgrade.UpgradeCmd.GroupID = configure.CommandsGroup.ID
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
