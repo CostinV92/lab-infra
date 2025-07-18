@@ -1,5 +1,5 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+Copyright © 2025 Victor-Gabriel Costin <costinv92@gmail.com>
 */
 package cmd
 
@@ -39,12 +39,23 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.AddGroup(&configure.CommandsGroup)
+	rootCmd.AddGroup(&configure.HelpGroup)
+
+	rootCmd.SetHelpCommandGroupID(configure.HelpGroup.ID)
+	rootCmd.SetCompletionCommandGroupID(configure.HelpGroup.ID)
+
 	rootCmd.AddCommand(configure.ConfigureCmd)
+	configure.ConfigureCmd.GroupID = configure.HelpGroup.ID
+
 	rootCmd.AddCommand(service.ServiceCmd)
+	service.ServiceCmd.GroupID = configure.CommandsGroup.ID
+
 	rootCmd.AddCommand(bashrc.BashrcCmd)
+	bashrc.BashrcCmd.GroupID = configure.CommandsGroup.ID
+
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-
 	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write")
 }
