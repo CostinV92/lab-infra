@@ -51,7 +51,8 @@ func init() {
 	getHomeDir()
 }
 
-func SetConfigFile() {
+func ReadConfigFile() {
+	// get CfgFile path
 	if CfgFile == "" {
 		CfgFile = homeDir + "/.labtool.env"
 	}
@@ -59,9 +60,7 @@ func SetConfigFile() {
 	viper.SetConfigType("env")
 	viper.SetConfigFile(CfgFile)
 	fmt.Println("Using config file:", viper.ConfigFileUsed())
-}
 
-func ReadConfigFile() {
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: config file not found. Run 'labtool configure' to create it\n")
 		os.Exit(1)
@@ -74,6 +73,8 @@ func ReadConfigFile() {
 	Cfg.ScriptsDir = viper.GetString("scripts_dir")
 	Cfg.ServicesDir = viper.GetString("services_dir")
 	Cfg.ServicesEnvDir = viper.GetString("services_env_dir")
+
+	os.Setenv("ANSIBLE_CONFIG", Cfg.AnsibleConfigFile)
 }
 
 func getHomeDir() {

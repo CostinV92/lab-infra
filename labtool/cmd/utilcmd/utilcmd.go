@@ -13,9 +13,8 @@ var (
 	playbook  string
 )
 
-func InitCmd() {
+func InitRunCmd() {
 	configure.ReadConfigFile()
-	os.Setenv("ANSIBLE_CONFIG", configure.Cfg.AnsibleConfigFile)
 
 	// Prepare shellCmd
 	shellCmd = exec.Command("ansible-playbook")
@@ -43,8 +42,6 @@ func RunCmd() {
 
 	shellCmd.Args = append(shellCmd.Args, extraVars...)
 	shellCmd.Args = append(shellCmd.Args, playbook)
-
-	fmt.Println(shellCmd)
 
 	shellCmd.Run()
 }

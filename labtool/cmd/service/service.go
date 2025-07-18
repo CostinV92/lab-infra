@@ -20,8 +20,7 @@ var (
 		Long:  `Control your services`,
 		// Run: func(cmd *cobra.Command, args []string) { },
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			configure.SetConfigFile()
-			utilcmd.InitCmd()
+			utilcmd.InitRunCmd()
 
 			// Add extra-vars
 			utilcmd.AddExtraVar("service", service)

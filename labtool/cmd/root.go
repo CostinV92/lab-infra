@@ -46,7 +46,5 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVarP(&configure.Host, "target-host", "t", "", "host to provision bashrc on")
-	rootCmd.MarkPersistentFlagRequired("target-host")
 	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write")
 }
