@@ -49,10 +49,9 @@ Warning this will overwrite any existing configuration file`,
 
 func init() {
 	getHomeDir()
-	setConfigFile()
 }
 
-func setConfigFile() {
+func SetConfigFile() {
 	if CfgFile == "" {
 		CfgFile = homeDir + "/.labtool.env"
 	}

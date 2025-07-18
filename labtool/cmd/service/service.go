@@ -20,6 +20,7 @@ var (
 		Long:  `Control your services`,
 		// Run: func(cmd *cobra.Command, args []string) { },
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			configure.SetConfigFile()
 			utilcmd.InitCmd()
 
 			// Add extra-vars
@@ -34,6 +35,8 @@ func init() {
 	ServiceCmd.AddCommand(startCmd)
 	ServiceCmd.AddCommand(restartCmd)
 
+	ServiceCmd.PersistentFlags().StringVarP(&configure.Host, "target-host", "t", "", "host to provision bashrc on")
+	ServiceCmd.MarkPersistentFlagRequired("target-host")
 	ServiceCmd.PersistentFlags().StringVarP(&service, "service", "s", "", "service to run command for")
 	ServiceCmd.MarkPersistentFlagRequired("service")
 }
