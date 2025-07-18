@@ -16,6 +16,7 @@ var BashrcCmd = &cobra.Command{
 	Short: "Provision bashrc on a server",
 	Long:  `Combine a global and a local (per host) bash rc and provision it on the target host`,
 	Run: func(cmd *cobra.Command, args []string) {
+		configure.SetConfigFile()
 		utilcmd.InitCmd()
 		utilcmd.AddExtraVar("scripts_dir", configure.Cfg.ScriptsDir)
 		utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/provision_bashrc.yaml")
@@ -32,4 +33,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// bashrcCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	BashrcCmd.PersistentFlags().StringVarP(&configure.Host, "target-host", "t", "", "host to provision bashrc on")
+	BashrcCmd.MarkPersistentFlagRequired("target-host")
 }
