@@ -6,4 +6,5 @@
        name: "*"
        state: latest
        update_cache: yes
+       autoremove: true
      become: true

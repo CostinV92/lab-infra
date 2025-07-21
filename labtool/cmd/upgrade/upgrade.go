@@ -18,7 +18,7 @@ var UpgradeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		utilcmd.InitRunCmd()
 		utilcmd.AddExtraVar("target_host", configure.Host)
-		utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/upgrade.yaml")
+		utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/upgrade_host.yaml")
 	},
 }
 
