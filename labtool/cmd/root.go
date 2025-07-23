@@ -68,4 +68,5 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write")
 	rootCmd.PersistentFlags().StringVarP(&configure.User, "user", "u", "", "ansible user")
 	rootCmd.PersistentFlags().BoolVarP(&configure.Verbose, "verbose", "v", false, "verbose output")
+	rootCmd.PersistentFlags().BoolVarP(&configure.DryRun, "dry-run", "d", false, "print the ansible command; don't run it")
 }

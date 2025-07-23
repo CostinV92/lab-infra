@@ -31,6 +31,7 @@ var (
 	Cfg     config
 	Host    string
 	Verbose bool
+	DryRun  bool
 	User    string
 
 	homeDir string
@@ -162,7 +163,7 @@ func readServiceDir() {
 func readServiceEnvDir() {
 	readStringToVar("Services environement directory (relative to $HOME)", &Cfg.ServicesEnvDir)
 	appendHomeDir(&Cfg.ServicesEnvDir)
-	cobra.CheckErr(validatePath("services env directory", Cfg.ServicesDir, true))
+	cobra.CheckErr(validatePath("services env directory", Cfg.ServicesEnvDir, true))
 }
 
 func readScriptsDir() {

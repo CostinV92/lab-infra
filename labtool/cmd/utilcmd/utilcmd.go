@@ -17,6 +17,22 @@ var (
 	playbook  string
 )
 
+func BuildCmd() *exec.Cmd {
+	if shellCmd == nil {
+		return shellCmd
+	}
+
+	shellCmd.Args = append(shellCmd.Args, extraVars...)
+	shellCmd.Args = append(shellCmd.Args, flags...)
+	shellCmd.Args = append(shellCmd.Args, playbook)
+
+	if configure.Verbose {
+		shellCmd.Args = append(shellCmd.Args, "-vvv")
+	}
+
+	return shellCmd
+}
+
 func InitRunCmd() {
 	configure.ReadConfigFile()
 
@@ -46,17 +62,11 @@ func SetPlaybook(play string) {
 }
 
 func RunCmd() {
-	if shellCmd == nil {
-		return
+	BuildCmd()
+
+	if !configure.DryRun {
+		shellCmd.Run()
+	} else {
+		fmt.Println(shellCmd)
 	}
-
-	shellCmd.Args = append(shellCmd.Args, extraVars...)
-	shellCmd.Args = append(shellCmd.Args, flags...)
-	shellCmd.Args = append(shellCmd.Args, playbook)
-
-	if configure.Verbose {
-		shellCmd.Args = append(shellCmd.Args, "-vvv")
-	}
-
-	shellCmd.Run()
 }
