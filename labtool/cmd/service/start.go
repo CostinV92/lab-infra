@@ -17,10 +17,14 @@ var startCmd = &cobra.Command{
 	Long:  "start a service",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/start_service.yaml")
+		startRun()
 	},
 }
 
 func init() {
 
+}
+
+func startRun() {
+	utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/start_service.yaml")
 }

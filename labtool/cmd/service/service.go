@@ -20,12 +20,7 @@ var (
 		Long:  `Control your services`,
 		// Run: func(cmd *cobra.Command, args []string) { },
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			utilcmd.InitRunCmd()
-
-			// Add extra-vars
-			utilcmd.AddExtraVar("service", service)
-			utilcmd.AddExtraVar("services_dir", configure.Cfg.ServicesDir)
-			utilcmd.AddExtraVar("env_dir", configure.Cfg.ServicesEnvDir)
+			servicePreRun(service, configure.Cfg.ServicesDir, configure.Cfg.ServicesEnvDir)
 		},
 	}
 )
@@ -43,4 +38,13 @@ func init() {
 	ServiceCmd.MarkPersistentFlagRequired("target-host")
 	ServiceCmd.PersistentFlags().StringVarP(&service, "service", "s", "", "service to run command for")
 	ServiceCmd.MarkPersistentFlagRequired("service")
+}
+
+func servicePreRun(service, servicesDir, servicesEnvDir string) {
+	utilcmd.InitRunCmd()
+
+	// Add extra-vars
+	utilcmd.AddExtraVar("service", service)
+	utilcmd.AddExtraVar("services_dir", servicesDir)
+	utilcmd.AddExtraVar("env_dir", servicesEnvDir)
 }

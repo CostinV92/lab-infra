@@ -17,10 +17,14 @@ var restartCmd = &cobra.Command{
 	Long:  "restart a service",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/restart_service.yaml")
+		restartRun()
 	},
 }
 
 func init() {
 
+}
+
+func restartRun() {
+	utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/restart_service.yaml")
 }
