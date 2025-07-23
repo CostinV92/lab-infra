@@ -15,9 +15,10 @@ set_prompt() {
 
 		local DEFAULT='\[\e[00m\]'
 
-		local REDB='\[\e[0;31m\]'
-		local GREENB='\[\e[0;32m\]'
-		local YELLOWB='\[\e[0;33m\]'
+		local RED='\[\e[0;31m\]'
+		local GREEN='\[\e[0;32m\]'
+		local YELLOW='\[\e[0;33m\]'
+		local BLUE='\[\e[0;36m\]'
 
 		# magenta
 		local USER_COLOR='\[\e[0;35m\]'
@@ -26,12 +27,22 @@ set_prompt() {
 		local DIR_COLOR='\[\e[1;34m\]'
 		
 		local COLOR=$DEFAULT
-		local VLAN=$(ip route get 192.168.1.1 | awk '{print $7; exit}' | awk -F. '{print $3; exit}')
-		case "$VLAN" in
-			"$GREEN_VLAN") COLOR=$GREENB ;;
-			"$RED_VLAN") COLOR=$REDB ;;
-			"$YELLOW_VLAN") COLOR=$YELLOWB ;;
-		esac
+		local ON_LOCAL_NET=false
+
+		if [ $(ip route get 192.168.1.1 | awk '{print $7; exit}' | awk -F. '{print $1$2; exit}') == "192168" ]; then
+			ON_LOCAL_NET=true
+		fi
+
+		if [ "$ON_LOCAL_NET" == true ]; then
+			local VLAN=$(ip route get 192.168.1.1 | awk '{print $7; exit}' | awk -F. '{print $3; exit}')
+			case "$VLAN" in
+				"$GREEN_VLAN") COLOR=$GREEN ;;
+				"$RED_VLAN") COLOR=$RED ;;
+				"$YELLOW_VLAN") COLOR=$YELLOW ;;
+			esac
+		else
+			COLOR=$BLUE
+		fi
 
 		if [ "$COLOR" ]; then
 			PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}${USER_COLOR}\u${COLOR}@${COLOR}\h${DEFAULT}:${DIR_COLOR}\w${DEFAULT}\$ "
