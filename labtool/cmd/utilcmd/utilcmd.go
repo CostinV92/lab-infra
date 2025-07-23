@@ -13,6 +13,7 @@ import (
 var (
 	shellCmd  *exec.Cmd
 	extraVars []string
+	flags     []string
 	playbook  string
 )
 
@@ -25,9 +26,15 @@ func InitRunCmd() {
 	shellCmd.Stderr = os.Stderr
 	shellCmd.Args = append(shellCmd.Args, "-i", configure.Cfg.InventoryPath)
 
+	os.Setenv("ANSIBLE_CONFIG", configure.Cfg.AnsibleConfigFile)
+
 	// Add extra-vars
 	extraVars = append(extraVars, "-e", fmt.Sprintf("target_host=%s", configure.Host))
 	extraVars = append(extraVars, "-e", fmt.Sprintf("admin_user=%s", configure.Cfg.AdminUser))
+}
+
+func AddFlag(flag, value string) {
+	flags = append(flags, fmt.Sprintf("-%s=%s", flag, value))
 }
 
 func AddExtraVar(key, value string) {
@@ -44,7 +51,12 @@ func RunCmd() {
 	}
 
 	shellCmd.Args = append(shellCmd.Args, extraVars...)
+	shellCmd.Args = append(shellCmd.Args, flags...)
 	shellCmd.Args = append(shellCmd.Args, playbook)
+
+	if configure.Verbose {
+		shellCmd.Args = append(shellCmd.Args, "-vvv")
+	}
 
 	shellCmd.Run()
 }

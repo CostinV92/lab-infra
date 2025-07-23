@@ -30,6 +30,9 @@ var (
 	CfgFile string
 	Cfg     config
 	Host    string
+	Verbose bool
+	User    string
+
 	homeDir string
 
 	CommandsGroup = cobra.Group{ID: "Commands", Title: "Commands"}
@@ -76,8 +79,6 @@ func ReadConfigFile() {
 	Cfg.ScriptsDir = viper.GetString("scripts_dir")
 	Cfg.ServicesDir = viper.GetString("services_dir")
 	Cfg.ServicesEnvDir = viper.GetString("services_env_dir")
-
-	os.Setenv("ANSIBLE_CONFIG", Cfg.AnsibleConfigFile)
 }
 
 func getHomeDir() {

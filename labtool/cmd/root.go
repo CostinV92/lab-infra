@@ -25,6 +25,9 @@ and run your ansible environment in a user friendly way.`,
 		// has an action associated with it:
 		// Run: func(cmd *cobra.Command, args []string) { fmt.Printf("Command run\n") },
 		PersistentPostRun: func(cmd *cobra.Command, args []string) {
+			if len(configure.User) != 0 {
+				utilcmd.AddFlag("u", configure.User)
+			}
 			utilcmd.RunCmd()
 		},
 	}
@@ -62,4 +65,6 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write")
+	rootCmd.PersistentFlags().StringVarP(&configure.User, "user", "u", "", "ansible user")
+	rootCmd.PersistentFlags().BoolVarP(&configure.Verbose, "verbose", "v", false, "verbose output")
 }
