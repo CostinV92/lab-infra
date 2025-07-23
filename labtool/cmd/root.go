@@ -8,6 +8,7 @@ import (
 	"labtool/cmd/configure"
 	"labtool/cmd/service"
 	"labtool/cmd/upgrade"
+	"labtool/cmd/useradd"
 	"labtool/cmd/utilcmd"
 	"os"
 
@@ -61,9 +62,9 @@ func init() {
 	rootCmd.AddCommand(upgrade.UpgradeCmd)
 	upgrade.UpgradeCmd.GroupID = configure.CommandsGroup.ID
 
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
+	rootCmd.AddCommand(useradd.UseraddCmd)
+	useradd.UseraddCmd.GroupID = configure.CommandsGroup.ID
+
 	rootCmd.PersistentFlags().StringVarP(&configure.CfgFile, "config", "c", configure.CfgFile, "config file to use or write")
 	rootCmd.PersistentFlags().StringVarP(&configure.User, "user", "u", "", "ansible user")
 	rootCmd.PersistentFlags().BoolVarP(&configure.Verbose, "verbose", "v", false, "verbose output")

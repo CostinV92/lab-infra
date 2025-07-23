@@ -1,0 +1,17 @@
+---
+- name: Add user to target host
+  hosts: "{{ target_host }}"
+  tasks:
+    - name: Create sudo user
+      ansible.builtin.user:
+        name: "{{ new_user }}"
+        state: present
+        shell: /bin/bash
+        home: "/home/{{ new_user }}"
+        createhome: true
+        password: "{{ password }}"
+        update_password: on_create
+        uid: "{{ uid }}"
+        append: true
+        groups: "sudo"
+      become: true
