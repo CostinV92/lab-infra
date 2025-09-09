@@ -12,7 +12,7 @@ services:
     volumes:
       - ${QBT_DATA}/config:/config
       - ${NFS_PUBLIC_DIR}/downloads:/default-downloads/
-      - ${QBT_DATA}/incomplete-downloads:/incomplete-downloads/
+      - ${QBT_LOCAL_STORAGE}/incomplete-downloads:/incomplete-downloads/
       - ${QBT_DATA}/qbt_ui/:/qbt_ui # webui skins
       - ${MEDIA_DIR}:/media-library
     ports:
