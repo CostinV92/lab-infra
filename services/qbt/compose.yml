@@ -11,9 +11,10 @@ services:
       - TORRENTING_PORT=${QBT_TORRENT_PORT}
     volumes:
       - ${QBT_DATA}/config:/config
-      - ${QBT_DATA}/downloads:/downloads/
+      - ${NFS_PUBLIC_DIR}/downloads:/default-downloads/
+      - ${QBT_DATA}/incomplete-downloads:/incomplete-downloads/
       - ${QBT_DATA}/qbt_ui/:/qbt_ui # webui skins
-      - ${MEDIA_DIR}:/jellyfin # jellyfin library for direct downloading
+      - ${MEDIA_DIR}:/media-library
     ports:
       - ${QBT_WEB_PORT}:${QBT_WEB_PORT}
       - ${QBT_TORRENT_PORT}:${QBT_TORRENT_PORT}
