@@ -1,0 +1,25 @@
+---
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
+    volumes:
+      - ${RADARR_DATA}/config:/config
+      - ${MEDIA_DIR}/films:/movies #optional
+      - ${DOWNLOADS_DIR}:/default-downloads #optional
+    ports:
+      - ${RADARR_PORT}:7878
+    networks:
+      - radarr_network
+    restart: unless-stopped
+
+networks:
+  radarr_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${RADARR_NETWORK}

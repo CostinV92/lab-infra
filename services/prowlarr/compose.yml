@@ -1,0 +1,23 @@
+---
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
+    volumes:
+      - ${PROWLARR_DATA}/config:/config
+    ports:
+      - ${PROWLARR_PORT}:9696
+    networks:
+      - prowlarr_network
+    restart: unless-stopped
+
+networks:
+  prowlarr_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${PROWLARR_NETWORK}
