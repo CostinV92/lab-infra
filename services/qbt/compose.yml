@@ -11,8 +11,8 @@ services:
       - TORRENTING_PORT=${QBT_TORRENT_PORT}
     volumes:
       - ${QBT_DATA}/config:/config
-      - ${NFS_PUBLIC_DIR}/downloads:/default-downloads/
-      - ${QBT_LOCAL_STORAGE}/incomplete-downloads:/incomplete-downloads/
+      - ${DOWNLOADS_DIR}:/default-downloads/
+      - ${QBT_LOCAL_STORAGE}/local-downloads:/local-downloads/
       - ${QBT_DATA}/qbt_ui/:/qbt_ui # webui skins
       - ${MEDIA_DIR}:/media-library
     ports:
