@@ -1,0 +1,28 @@
+---
+services:
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=Europe/Bucharest
+    ports:
+      - ${SEER_PORT}:5055
+    volumes:
+      - ${SEER_DATA}/config:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+    networks:
+      - seer_network
+    restart: unless-stopped
+
+networks:
+  seer_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SEER_NETWORK}
