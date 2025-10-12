@@ -9,8 +9,7 @@ services:
       - TZ=Europe/Bucharest
     volumes:
       - ${RADARR_DATA}/config:/config
-      - ${MEDIA_DIR}/films:/movies #optional
-      - ${DOWNLOADS_DIR}:/default-downloads #optional
+      - ${NFS_PUBLIC_DIR}:/nfs
     ports:
       - ${RADARR_PORT}:7878
     networks:
