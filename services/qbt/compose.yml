@@ -12,7 +12,6 @@ services:
     volumes:
       - ${QBT_DATA}/config:/config
       - ${NFS_PUBLIC_DIR}:/nfs/
-      - ${QBT_LOCAL_STORAGE}/local-downloads:/local-downloads/
       - ${QBT_DATA}/qbt_ui/:/qbt_ui # webui skins
     ports:
       - ${QBT_WEB_PORT}:${QBT_WEB_PORT}

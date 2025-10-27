@@ -11,8 +11,7 @@ services:
       - /dev/dri/:/dev/dri/
     volumes:
       - ${JELLYFIN_DATA}/config:/config
-      - ${SERIES_DIR}:/data/series
-      - ${FILMS_DIR}:/data/films
+      - ${NFS_PUBLIC_DIR}:/nfs
     ports:
       - ${JELLYFIN_PORT}:${JELLYFIN_PORT}
     restart: unless-stopped
