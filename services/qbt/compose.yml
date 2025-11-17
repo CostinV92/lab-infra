@@ -9,6 +9,7 @@ services:
       - TZ=Europe/Bucharest
       - WEBUI_PORT=${QBT_WEB_PORT}
       - TORRENTING_PORT=${QBT_TORRENT_PORT}
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     volumes:
       - ${QBT_DATA}/config:/config
       - ${NFS_PUBLIC_DIR}:/nfs/
