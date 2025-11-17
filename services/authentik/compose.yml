@@ -11,7 +11,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - authentik_database:/var/lib/postgresql/data
+      - ${AUTHENTIK_DATA}/post_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${AUTHENTIK_PG_PASS:?database password required}
       POSTGRES_USER: ${PG_USER:-authentik}
@@ -100,8 +100,6 @@ services:
       - authentik_network
 
 volumes:
-  authentik_database:
-    driver: local
   authentik_redis:
     driver: local
 
