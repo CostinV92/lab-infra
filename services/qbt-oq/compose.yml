@@ -1,0 +1,29 @@
+services:
+
+  qbt-oq:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbt-oq
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
+      - WEBUI_PORT=${QBT_OQ_WEB_PORT}
+      - TORRENTING_PORT=${QBT_OQ_TORRENT_PORT}
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
+    volumes:
+      - ${QBT_OQ_DATA}/config:/config
+      - ${NFS_PUBLIC_DIR}/downloads/oq:/downloads
+    ports:
+      - ${QBT_OQ_WEB_PORT}:${QBT_OQ_WEB_PORT}
+      - ${QBT_OQ_TORRENT_PORT}:${QBT_OQ_TORRENT_PORT}
+      - ${QBT_OQ_TORRENT_PORT}:${QBT_OQ_TORRENT_PORT}/udp
+    networks:
+      - qbt_oq_network
+    restart: unless-stopped
+
+networks:
+  qbt_oq_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${QBT_OQ_NETWORK}
