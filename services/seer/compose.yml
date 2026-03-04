@@ -1,8 +1,9 @@
 ---
 services:
   jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seer
     environment:
       - LOG_LEVEL=debug
       - TZ=Europe/Bucharest
@@ -11,7 +12,7 @@ services:
     volumes:
       - ${SEER_DATA}/config:/app/config
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      test: wget --no-verbose --tries=1 --spider http://localhost:${SEER_PORT}/api/v1/status || exit 1
       start_period: 20s
       timeout: 3s
       interval: 15s

@@ -10,8 +10,8 @@ set_prompt() {
 	# if inetractive shell change prompt
 	if [ "$PS1" ]; then
 		local GREEN_VLAN=10
-		local RED_VLAN=20
-		local YELLOW_VLAN=66
+		local YELLOW_VLAN=20
+		local RED_VLAN=30
 
 		local DEFAULT='\[\e[00m\]'
 

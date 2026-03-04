@@ -10,7 +10,7 @@ services:
     environment:
       - TZ=Europe/Bucharest
       - UPSNAP_HTTP_LISTEN=0.0.0.0:${UPSNAP_PORT}
-      - UPSNAP_SCAN_RANGE=192.168.66.0/24
+      - UPSNAP_SCAN_RANGE=${UPSNAP_SCAN_RANGE}
 
     # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
     # user: 1000:1000
