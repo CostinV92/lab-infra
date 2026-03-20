@@ -64,6 +64,10 @@ func SetPlaybook(play string) {
 func RunCmd() {
 	BuildCmd()
 
+	if shellCmd == nil {
+		return
+	}
+
 	if !configure.DryRun {
 		shellCmd.Run()
 	} else {

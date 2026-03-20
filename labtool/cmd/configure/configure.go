@@ -56,16 +56,17 @@ Warning this will overwrite any existing configuration file`,
 
 func init() {
 	getHomeDir()
-}
 
-func ReadConfigFile() {
 	// get CfgFile path
 	if CfgFile == "" {
 		CfgFile = homeDir + "/.labtool.env"
 	}
 
-	viper.SetConfigType("env")
 	viper.SetConfigFile(CfgFile)
+	viper.SetConfigType("env")
+}
+
+func ReadConfigFile() {
 	fmt.Println("Using config file:", viper.ConfigFileUsed())
 
 	if err := viper.ReadInConfig(); err != nil {
@@ -137,7 +138,7 @@ func readAdminUser() {
 }
 
 func readPlaybookDir() {
-	readStringToVar("Ansible playbook directory (relatinve to $HOME)", &Cfg.PlaybookDir)
+	readStringToVar("Ansible playbook directory (relative to $HOME)", &Cfg.PlaybookDir)
 	appendHomeDir(&Cfg.PlaybookDir)
 	cobra.CheckErr(validatePath("playbook directory", Cfg.PlaybookDir, true))
 }
@@ -174,9 +175,9 @@ func readScriptsDir() {
 
 func readConfigFromInput() {
 	readAdminUser()
-	readPlaybookDir()
 	readInventoryPath()
 	readAnsibleConfigFile()
+	readPlaybookDir()
 	readServiceDir()
 	readServiceEnvDir()
 	readScriptsDir()
@@ -187,9 +188,9 @@ func saveConfigToFile() {
 	viper.Set("ansible_inventory_path", Cfg.InventoryPath)
 	viper.Set("ansible_config_file", Cfg.AnsibleConfigFile)
 	viper.Set("ansible_playbook_dir", Cfg.PlaybookDir)
-	viper.Set("scripts_dir", Cfg.ScriptsDir)
 	viper.Set("services_dir", Cfg.ServicesDir)
 	viper.Set("services_env_dir", Cfg.ServicesEnvDir)
+	viper.Set("scripts_dir", Cfg.ScriptsDir)
 
 	err := viper.WriteConfigAs(CfgFile)
 	if err != nil {
