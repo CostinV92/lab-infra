@@ -12,6 +12,7 @@ set_prompt() {
 		local GREEN_VLAN=10
 		local YELLOW_VLAN=20
 		local RED_VLAN=30
+		local DNS_VLAN=53
 
 		local DEFAULT='\[\e[00m\]'
 
@@ -19,6 +20,7 @@ set_prompt() {
 		local GREEN='\[\e[0;32m\]'
 		local YELLOW='\[\e[0;33m\]'
 		local BLUE='\[\e[0;36m\]'
+		local CYAN='\[\e[0;36m\]'
 
 		# magenta
 		local USER_COLOR='\[\e[0;35m\]'
@@ -39,6 +41,7 @@ set_prompt() {
 				"$GREEN_VLAN") COLOR=$GREEN ;;
 				"$RED_VLAN") COLOR=$RED ;;
 				"$YELLOW_VLAN") COLOR=$YELLOW ;;
+				"$DNS_VLAN") COLOR=$CYAN ;;
 			esac
 		else
 			COLOR=$BLUE
