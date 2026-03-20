@@ -40,9 +40,14 @@
         create: true
       when: bashrc_local_path is exists
 
+    - name: Check if file exists
+      stat:
+        path: "{{ bashrc_remote_path }}"
+      register: result
+
     - name: Source bashrc in main bashrc
       ansible.builtin.lineinfile:
         path: '~/.bashrc'
         line: '. {{ bashrc_remote_path }}'
         state: present
-      when: bashrc_remote_path is exists
+      when: result.stat.exists
