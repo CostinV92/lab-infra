@@ -1,3 +1,4 @@
 ---
 
 remote_data_dir: "/home/{{ admin_user }}/lab-data"
+remote_env_dir: "{{ remote_data_dir }}/env"
