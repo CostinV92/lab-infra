@@ -1,9 +1,9 @@
 ---
-- name: Provision bashrc
+- name: Provision
   hosts: "{{ target_host }}"
   vars_files:
     - ../vars/globals.yaml  
-    - ../vars/bashrc.yaml
+    - ../vars/provision.yaml
   tasks:
     - name: Create remote bashrc directory
       ansible.builtin.file:
@@ -40,7 +40,7 @@
         create: true
       when: bashrc_local_path is exists
 
-    - name: Check if file exists
+    - name: Check if bashrc exists
       stat:
         path: "{{ bashrc_remote_path }}"
       register: result
@@ -49,5 +49,24 @@
       ansible.builtin.lineinfile:
         path: '~/.bashrc'
         line: '. {{ bashrc_remote_path }}'
+        state: present
+      when: result.stat.exists
+
+    - name: Copy lab.env
+      ansible.builtin.copy:
+        src: '{{ lab_env_local_path }}'
+        dest: '{{ remote_env_dir }}'
+        backup: true
+      when: lab_env_local_path is exists
+
+    - name: Check if lab.env exists
+      stat:
+        path: "{{ lab_env_remote_path }}"
+      register: result
+
+    - name: Source lab.env in main bashrc
+      ansible.builtin.lineinfile:
+        path: '~/.bashrc'
+        line: '. {{ lab_env_remote_path }}'
         state: present
       when: result.stat.exists

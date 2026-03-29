@@ -4,8 +4,8 @@ Copyright © 2025 Victor-Gabriel Costin <costinv92@gmail.com>
 package cmd
 
 import (
-	"labtool/cmd/bashrc"
 	"labtool/cmd/configure"
+	"labtool/cmd/provision"
 	"labtool/cmd/service"
 	"labtool/cmd/upgrade"
 	"labtool/cmd/useradd"
@@ -54,8 +54,8 @@ func init() {
 	rootCmd.AddCommand(service.ServiceCmd)
 	service.ServiceCmd.GroupID = configure.CommandsGroup.ID
 
-	rootCmd.AddCommand(bashrc.BashrcCmd)
-	bashrc.BashrcCmd.GroupID = configure.CommandsGroup.ID
+	rootCmd.AddCommand(provision.ProvisionCmd)
+	provision.ProvisionCmd.GroupID = configure.CommandsGroup.ID
 
 	rootCmd.AddCommand(upgrade.UpgradeCmd)
 	upgrade.UpgradeCmd.GroupID = configure.CommandsGroup.ID

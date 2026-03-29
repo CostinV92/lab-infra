@@ -6,3 +6,7 @@ bashrc_local_file: "bashrc_local"
 bashrc_local_path: "{{ bashrc_dir }}/{{ inventory_hostname }}/{{ bashrc_local_file }}"
 bashrc_remote_dir: "{{ remote_env_dir }}/bashrc"
 bashrc_remote_path: "{{ bashrc_remote_dir }}/bashrc"
+
+lab_env_local_file: "lab.env"
+lab_env_local_path: "{{ env_dir }}/{{ lab_env_local_file }}"
+lab_env_remote_path: "{{ remote_env_dir }}/{{ lab_env_local_file }}"
