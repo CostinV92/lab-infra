@@ -4,6 +4,7 @@ Copyright © 2025 Victor-Gabriel Costin <costinv92@gmail.com>
 package service
 
 import (
+	"fmt"
 	"labtool/cmd/configure"
 	"labtool/cmd/utilcmd"
 
@@ -21,7 +22,7 @@ var (
 		// Run: func(cmd *cobra.Command, args []string) { },
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			utilcmd.InitRunCmd()
-			servicePreRun(service, configure.Cfg.ServicesDir, configure.Cfg.ServicesEnvDir)
+			servicePreRun(service, configure.Cfg.LabEnvDir, configure.Cfg.ServicesDir, configure.Cfg.ServicesEnvDir)
 		},
 	}
 )
@@ -41,9 +42,11 @@ func init() {
 	ServiceCmd.MarkPersistentFlagRequired("service")
 }
 
-func servicePreRun(service, servicesDir, servicesEnvDir string) {
+func servicePreRun(service, envDir, servicesDir, servicesEnvDir string) {
 	// Add extra-vars
+	fmt.Println(servicesEnvDir)
+	utilcmd.AddExtraVar("env_dir", envDir)
 	utilcmd.AddExtraVar("service", service)
 	utilcmd.AddExtraVar("services_dir", servicesDir)
-	utilcmd.AddExtraVar("env_dir", servicesEnvDir)
+	utilcmd.AddExtraVar("services_env_dir", servicesEnvDir)
 }
