@@ -19,7 +19,6 @@ type config struct {
 	LabEnvDir         string
 	ServicesDir       string
 	ServicesEnvDir    string
-	ScriptsDir        string
 }
 
 const ErrorConfDirNoExistsFmt = "directory '%s' doesn't exist"
@@ -80,7 +79,6 @@ func ReadConfigFile() {
 	Cfg.PlaybookDir = viper.GetString("ansible_playbook_dir")
 	Cfg.AnsibleConfigFile = viper.GetString("ansible_config_file")
 	Cfg.LabEnvDir = viper.GetString("lab_env_dir")
-	Cfg.ScriptsDir = viper.GetString("scripts_dir")
 	Cfg.ServicesDir = viper.GetString("services_dir")
 	Cfg.ServicesEnvDir = viper.GetString("services_env_dir")
 }
@@ -175,12 +173,6 @@ func readServiceEnvDir() {
 	cobra.CheckErr(validatePath("services env directory", Cfg.ServicesEnvDir, true))
 }
 
-func readScriptsDir() {
-	readStringToVar("Scripts directory (relative to $HOME)", &Cfg.ScriptsDir)
-	appendHomeDir(&Cfg.ScriptsDir)
-	cobra.CheckErr(validatePath("scripts directory", Cfg.ScriptsDir, true))
-}
-
 func readConfigFromInput() {
 	readAdminUser()
 	readInventoryPath()
@@ -189,7 +181,6 @@ func readConfigFromInput() {
 	readLabEnvDir()
 	readServiceDir()
 	readServiceEnvDir()
-	readScriptsDir()
 }
 
 func saveConfigToFile() {
@@ -200,7 +191,6 @@ func saveConfigToFile() {
 	viper.Set("lab_env_dir", Cfg.LabEnvDir)
 	viper.Set("services_dir", Cfg.ServicesDir)
 	viper.Set("services_env_dir", Cfg.ServicesEnvDir)
-	viper.Set("scripts_dir", Cfg.ScriptsDir)
 
 	err := viper.WriteConfigAs(CfgFile)
 	if err != nil {

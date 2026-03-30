@@ -14,11 +14,11 @@ import (
 var ProvisionCmd = &cobra.Command{
 	Use:   "provision",
 	Short: "Provision lab env on a server",
-	Long:  `Copy env files needed to run services to a server`,
+	Long:  `Copy global env files needed to run services to a server; doesn't provision any service specific env.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		utilcmd.InitRunCmd()
 		utilcmd.AddExtraVar("env_dir", configure.Cfg.LabEnvDir)
-		utilcmd.AddExtraVar("scripts_dir", configure.Cfg.ScriptsDir)
+		utilcmd.AddExtraVar("scripts_dir", configure.Cfg.LabEnvDir+"/scripts")
 		utilcmd.SetPlaybook(configure.Cfg.PlaybookDir + "/provision.yaml")
 	},
 }
