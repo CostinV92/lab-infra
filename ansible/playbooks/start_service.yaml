@@ -48,3 +48,9 @@
         project_src: '{{ remote_dir }}'
         state: present
       become: true
+
+    - name: Ensure borgmatic present
+      ansible.builtin.package:
+        name: borgmatic
+        state: present
+      become: true
