@@ -1,0 +1,25 @@
+---
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=Europe/Bucharest
+    volumes:
+      - ${BAZARR_DATA}/config:/config
+      - ${NFS_PUBLIC_DIR}:/nfs
+    ports:
+      - ${BAZARR_PORT}:6767
+    networks:
+      - bazarr_network
+    restart: unless-stopped
+
+networks:
+  bazarr_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${BAZARR_NETWORK}
+
