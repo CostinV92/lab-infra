@@ -8,15 +8,6 @@ services:
         soft: 4096
         hard: 8192
     stop_grace_period: 60s
-    ports:
-      - 8088:8088
-      - 8043:8043
-      - 8044:8044
-      - 8843:8843
-      - 19810:19810/udp
-      - 27001:27001/udp
-      - 29810:29810/udp
-      - 29811-29817:29811-29817
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
@@ -44,12 +35,5 @@ services:
     volumes:
       - ${OMADA_DATA}:/opt/tplink/EAPController/data
       - ${OMADA_LOGS}:/opt/tplink/EAPController/logs
-    networks:
-      - omada_network
+    network_mode: host
 
-networks:
-  omada_network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: ${OMADA_NETWORK}
