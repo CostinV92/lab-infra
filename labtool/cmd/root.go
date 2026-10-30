@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"labtool/cmd/configure"
+	"labtool/cmd/generateEnv"
 	"labtool/cmd/provision"
 	"labtool/cmd/service"
 	"labtool/cmd/upgrade"
@@ -50,6 +51,9 @@ func init() {
 
 	rootCmd.AddCommand(configure.ConfigureCmd)
 	configure.ConfigureCmd.GroupID = configure.HelpGroup.ID
+
+	rootCmd.AddCommand(generateEnv.GenerateEnvCmd)
+	generateEnv.GenerateEnvCmd.GroupID = configure.CommandsGroup.ID
 
 	rootCmd.AddCommand(service.ServiceCmd)
 	service.ServiceCmd.GroupID = configure.CommandsGroup.ID
