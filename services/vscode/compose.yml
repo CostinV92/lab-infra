@@ -17,6 +17,7 @@ services:
     volumes:
       - ${VSCODE_DATA}/config:/config
       - ${VSCODE_DATA}/workspace:/workspace
+      - ${VSCODE_SSH}:/config/.ssh
     ports:
       - ${VSCODE_PORT}:8443
     restart: unless-stopped
