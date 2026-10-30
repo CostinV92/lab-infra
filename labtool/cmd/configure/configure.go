@@ -59,7 +59,7 @@ func init() {
 
 	// get CfgFile path
 	if CfgFile == "" {
-		CfgFile = homeDir + "/.labtool.env"
+		CfgFile = homeDir + "/labtool/.labtool.env"
 	}
 
 	viper.SetConfigFile(CfgFile)
@@ -105,6 +105,10 @@ func discardStdin() {
 }
 
 func validatePath(name, path string, isDir bool) error {
+	if DryRun {
+		return nil
+	}
+
 	info, err := os.Stat(path)
 	if err != nil {
 		if isDir {
